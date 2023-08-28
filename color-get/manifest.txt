@@ -1,0 +1,55 @@
+{   // 扩展基本信息
+    "name": "Hello Extensions",
+    "version": "1.0",
+    "description": "Build an Extension!",
+    "manifest_version": 3,
+    // icon配置，不同尺寸的icon
+    "icons": {
+        "16": "hello_extensions.png", // 扩展页面上的图标和上下文菜单图标。
+        "32": "hello_extensions.png", // Windows 计算机通常需要此大小。
+        "48": "hello_extensions.png", // 显示在“扩展”页面上。
+        "128": "hello_extensions.png" // 在安装和 Chrome 网上应用店中显示。
+    },
+    // 声明内容脚本
+    // 扩展可以运行读取和修改页面内容的脚本。这些脚本称为内容脚本。他们生活在一个孤立的世界里，这意味着他们可以对他们的JavaScript环境进行更改，而不会与他们的主机页面或其他扩展的内容脚本发生冲突
+    "content_scripts": [
+        { // matches 表示匹配到这些网址，则运行 对应的 js 脚本
+          "js": ["scripts/content.js"],
+          "matches": [
+            "https://www.baidu.com/"
+          ]
+        }
+    ],
+    // 配置插件popup
+    "action": {
+        "default_popup": "hello.html",  // 插件popup
+        "default_icon": { // 插件popup图标配置
+            "16": "hello_extensions.png", // 扩展页面上的图标和上下文菜单图标。
+            "32": "hello_extensions.png", // Windows 计算机通常需要此大小。
+            "48": "hello_extensions.png", // 显示在“扩展”页面上。
+            "128": "hello_extensions.png" // 在安装和 Chrome 网上应用店中显示。
+        }
+    },
+    // 初始化扩展
+    "background": {
+        "service_worker": "background.js"
+    },
+    // permissions 权限设置，不添加权限会导致出现提示
+    // 该activeTab权限授予扩展在当前活动选项卡上执行代码的临时能力。它还允许访问当前选项卡的敏感属性。按键盘快捷键组合，选择上下文菜单项，接受来自多功能框的建议，打开扩展弹出窗口
+    // 使用脚本API 插入或删除样式表。首先"scripting"在清单中声明权限
+    "permissions": ["activeTab", "scripting"],
+    // 向特定站点授予更高的权限来保护用户隐私
+    "host_permissions": [
+        "https://developer.chrome.com/*"
+    ],
+    // 分配键盘快捷键
+    // 添加一个快捷方式，以便更轻松地启用或禁用焦点模式
+    "commands": {
+        "_execute_action": {
+          "suggested_key": {
+            "default": "Ctrl+B",
+            "mac": "Command+B"
+          }
+        }
+    }
+}
